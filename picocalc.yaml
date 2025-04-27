@@ -2,12 +2,26 @@ esphome:
   name: picocalc
   friendly_name: PicoCalc
 
+
+# Loads the picocalc custom components
 external_components:
   - source:
       type: local
       path: component
-  
+
+####### Rendering Engine #######
+# Pick One:
+#```
+# lvgl:
+#```
+# OR:
+#```
+<<: !include component/lib/lvgl/lvgl.yaml
+#```
+############
+
 picocalc:
+
 
 rp2040:
   board: rpipico2w

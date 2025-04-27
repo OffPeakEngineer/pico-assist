@@ -1,0 +1,301 @@
+font:
+    # gfonts://family[@weight]
+  - file: "gfonts://Roboto"
+    id: roboto_20
+    size: 10
+    
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons_20
+    size: 20
+    bpp: 4
+    glyphs: [
+      "\U000F007A", # mdi-battery-10
+      "\U000F007B", # mdi-battery-20
+      "\U000F007C", # mdi-battery-30
+      "\U000F007D", # mdi-battery-40
+      "\U000F007E", # mdi-battery-50
+      "\U000F007F", # mdi-battery-60
+      "\U000F0080", # mdi-battery-70
+      "\U000F0081", # mdi-battery-80
+      "\U000F0082", # mdi-battery-90
+      "\U000F0079", # mdi-battery (full)
+      "\U000F008E", # mdi-battery-outline
+      "\U000F0091", # mdi-battery-unknown
+      "\U000F0141", # mdi-chevron-left
+      "\U000F0142", # mdi-chevron-right
+      "\U000F02DC", # mdi-home
+      "\U000F091F", # mdi-wifi
+      "\U000F0920", # mdi-wifi-strength-alert-outline
+      "\U000F05AA"  # mdi-wifi-off
+      ]
+
+.theme: &theme
+  button:
+    bg_color: 0x2F8CD8
+    bg_grad_color: 0x005782
+    bg_grad_dir: VER
+    bg_opa: COVER
+    border_color: 0x0077b3
+    border_width: 1
+    text_color: 0xFFFFFF
+    pressed: # set some button colors to be different in pressed state
+      bg_color: 0x006699
+      bg_grad_color: 0x00334d
+    checked: # set some button colors to be different in checked state
+      bg_color: 0x1d5f96
+      bg_grad_color: 0x03324A
+      text_color: 0xfff300
+  buttonmatrix:
+    bg_opa: TRANSP
+    border_color: 0x0077b3
+    border_width: 0
+    text_color: 0xFFFFFF
+    pad_all: 0
+    items: # set all your buttonmatrix buttons to use your custom defined styles and font
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_color: 0x0077b3
+      border_width: 1
+      text_color: 0xFFFFFF
+      text_font: icons_20
+      pressed:
+        bg_color: 0x006699
+        bg_grad_color: 0x00334d
+      checked:
+        bg_color: 0x1d5f96
+        bg_grad_color: 0x03324A
+        text_color: 0x005580
+  switch:
+    bg_color: 0xC0C0C0
+    bg_grad_color: 0xb0b0b0
+    bg_grad_dir: VER
+    bg_opa: COVER
+    checked:
+      bg_color: 0x1d5f96
+      bg_grad_color: 0x03324A
+      bg_grad_dir: VER
+      bg_opa: COVER
+    knob:
+      bg_color: 0xFFFFFF
+      bg_grad_color: 0xC0C0C0
+      bg_grad_dir: VER
+      bg_opa: COVER
+  slider:
+    border_width: 1
+    border_opa: 15%
+    bg_color: 0xcccaca
+    bg_opa: 15%
+    indicator:
+      bg_color: 0x1d5f96
+      bg_grad_color: 0x03324A
+      bg_grad_dir: VER
+      bg_opa: COVER
+    knob:
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_color: 0x0077b3
+      border_width: 1
+      text_color: 0xFFFFFF
+.style_definitions: &style_definitions
+  - id: header_footer
+    bg_color: 0x2F8CD8
+    bg_grad_color: 0x005782
+    bg_grad_dir: VER
+    bg_opa: COVER
+    border_opa: TRANSP
+    radius: 0
+    pad_all: 0
+    pad_row: 0
+    pad_column: 0
+    border_color: 0x0077b3
+    text_color: 0xFFFFFF
+    width: 100%
+    height: 30
+
+
+lvgl:
+  theme: *theme
+  style_definitions: *style_definitions
+  top_layer:
+    widgets:
+      - obj:
+          align: TOP_MID
+          styles: header_footer
+          widgets:
+            - label:
+                id: time_label
+                align: TOP_MID
+                text: "00:00"
+                y: 3
+            - label:
+                id: pico_temperature_label
+                align: TOP_LEFT
+                text: ""
+                x: 5
+                y: 3
+            - label:
+                id: lbl_hastatus
+                text: "\U000F0920"
+                align: TOP_RIGHT
+                x: -22
+                y: 2
+                text_font: icons_20
+            - label:
+                id: battery
+                text: "\U000F0091"
+                align: TOP_RIGHT
+                x: -1
+                y: 2
+                text_font: icons_20
+      - buttonmatrix:
+          align: bottom_mid
+          styles: header_footer
+          pad_all: 0
+          outline_width: 0
+          id: top_layer
+          items:
+            styles: header_footer
+          rows:
+            - buttons:
+              - id: page_prev
+                text: "\U000F0141"
+                on_press:
+                  then:
+                    lvgl.page.previous:
+              - id: page_home
+                text: "\U000F02DC"
+                on_press:
+                  then:
+                    lvgl.page.show: home
+              - id: page_next
+                text: "\U000F0142"
+                on_press:
+                  then:
+                    lvgl.page.next:
+  pages:
+    - id: home
+      widgets:
+        - label:
+            id: light_status_label
+            align: CENTER
+            text: "Garage Lights: Unknown"
+        - label:
+            align: TOP_LEFT
+            text: 'Hello World!'
+            y: 35
+            x: 5
+        - textarea:
+            id: log_box
+            text: ""
+            width: 290
+            height: 80
+            x: 10
+            y: -45
+            align: BOTTOM_LEFT
+
+            
+switch:
+  - platform: template
+    name: Antiburn
+    id: switch_antiburn
+    icon: mdi:television-shimmer
+    optimistic: true
+    entity_category: "config"
+    turn_on_action:
+      - logger.log: "Starting Antiburn"
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+      - lvgl.pause:
+          show_snow: true
+    turn_off_action:
+      - logger.log: "Stopping Antiburn"
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+
+sensor:
+  - platform: internal_temperature
+    name: "Internal Temperature"
+    id: pico_temperature
+    on_value: 
+      then:
+        - lvgl.label.update:
+            id: pico_temperature_label
+            text: !lambda |-
+              char buffer[48];
+              float f = x * 9.0 / 5.0 + 32.0;
+              snprintf(buffer, sizeof(buffer), "%.1f °C / %.1f °F", x, f);
+              return std::string(buffer);
+
+text_sensor:
+  - platform: homeassistant
+    name: "Garage Light"
+    entity_id: light.garage_garage_lights
+    id: indoor_garage_light_switch
+    on_value:
+      then:
+        - if:
+            condition:
+              lambda: |-
+                return x == "on";
+            then:
+              - lvgl.label.update:
+                  id: light_status_label
+                  text: "Garage Lights: On"
+            else:
+              - lvgl.label.update:
+                  id: light_status_label
+                  text: "Garage Lights: Off"
+
+api:
+  on_client_connected:
+    - lvgl.label.update:
+        id: lbl_hastatus
+        text: "\U000F091F"
+  on_client_disconnected:
+    - lvgl.label.update:
+        id: lbl_hastatus
+        text: "\U000F05AA"
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    on_time:
+      - hours: 2,3,4,5
+        minutes: 5
+        seconds: 0
+        then:
+          - switch.turn_on: switch_antiburn
+      - hours: 2,3,4,5
+        minutes: 35
+        seconds: 0
+        then:
+          - switch.turn_off: switch_antiburn
+
+interval:
+  - interval: 1s
+    then:
+      - lvgl.label.update:
+          id: time_label
+          text: !lambda |-
+            auto time = id(homeassistant_time).now();
+            const char* current_text = lv_label_get_text(id(time_label));
+            if (!time.is_valid()) { 
+              if (strcmp(current_text, "00:00") == 0) { // blink effect
+                return "";
+              }
+              return "00:00";
+            }
+            char str[6];
+            snprintf(str, sizeof(str), "%02d:%02d", time.hour, time.minute);
+            return str;
+ 
