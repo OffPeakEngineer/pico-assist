@@ -1,0 +1,72 @@
+esphome:
+  name: picocalc
+  friendly_name: PicoCalc
+
+external_components:
+  - source:
+      type: local
+      path: component
+  
+picocalc:
+
+rp2040:
+  board: rpipico2w
+  framework:
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git#develop
+    version: dev
+
+i2c:
+  - id: bus_0
+    sda: GPIO04
+    scl: GPIO05
+    frequency: 10kHz
+
+spi:
+  clk_pin: GPIO10
+  mosi_pin: GPIO11
+  miso_pin: GPIO12
+  id: spi_1
+
+display:
+  - id: builtin_display
+    platform: ili9xxx
+    model: ILI9341
+    spi_id: spi_1
+    cs_pin: GPIO13
+    dc_pin: GPIO14
+    reset_pin: GPIO15
+    color_order: BGR
+    invert_colors: true
+    update_interval: 100ms
+    dimensions:
+      width: 320
+      height: 320
+    transform:
+       swap_xy: false
+       mirror_x: true
+       mirror_y: false
+
+
+# Enable logging
+logger:
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret pico_api_key
+
+ota:
+  - platform: esphome
+    password: !secret pico_ota_password
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+    - ssid: !secret mobile_wifi_ssid
+      password: !secret mobile_wifi_password
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "PicoCalc Fallback Hotspot"
+    password: !secret pico_wifi_ap_password
