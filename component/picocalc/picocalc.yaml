@@ -1,0 +1,36 @@
+# Loads the picocalc custom components
+external_components:
+  - source:
+      type: local
+      path: component
+
+i2c:
+  - id: bus_0
+    sda: GPIO04
+    scl: GPIO05
+    frequency: 10kHz
+
+spi:
+  clk_pin: GPIO10
+  mosi_pin: GPIO11
+  miso_pin: GPIO12
+  id: spi_1
+
+display:
+  - id: builtin_display
+    platform: ili9xxx
+    model: ILI9341
+    spi_id: spi_1
+    cs_pin: GPIO13
+    dc_pin: GPIO14
+    reset_pin: GPIO15
+    color_order: BGR
+    invert_colors: true
+    update_interval: 100ms
+    dimensions:
+      width: 320
+      height: 320
+    transform:
+       swap_xy: false
+       mirror_x: true
+       mirror_y: false

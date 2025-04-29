@@ -10,18 +10,19 @@ namespace esphome
 
         void PicoCalc::setup()
         {
+            ESP_LOGI(TAG, "PicoCalc Online!");
             ESP_LOGCONFIG(TAG, "Setting up PicoCalc");
-        }
+         }
 
         void PicoCalc::dump_config()
         {
+            ESP_LOGI(TAG, "PicoCalc Online!");
             ESP_LOGCONFIG(TAG, "PicoCalc config:");
         }
 
         void PicoCalc::loop()
         {
-            
-        }
 
+        }
     } // namespace picocalc
 } // namespace esphome
