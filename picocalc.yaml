@@ -11,6 +11,10 @@ rp2040:
     platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git#develop
     version: dev
 
+picocalc:
+  id: clockwork
+
+
 ####### Rendering Engine #######
 # Pick one and uncomment it:
 # 
@@ -30,11 +34,17 @@ rp2040:
 # The Adafruit GFX library example.
 #   Based largely on the adafruit_gfx example: https://github.com/adafruit/Adafruit-GFX-Library/blob/master/examples/mock_ili9341/mock_ili9341.ino
 #``` 
-picocalc:
-  id: clockwork
-adafruit_gfx:
+# adafruit_gfx:
+#```
+#
+# OR:
+# The CTX Graphics Library.
+#   Using the: https://ctx.graphics/ library
+#``` 
+ctx_gfx:
 #```
 ##### ^ Rendering Engine ^ ######
+
 
 <<: !include component/picocalc/picocalc.yaml
 

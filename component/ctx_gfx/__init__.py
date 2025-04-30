@@ -4,13 +4,13 @@ from esphome.const import CONF_ID
 
 MULTI_CONF = False  # Set to True if multiple instances are allowed
 
-picocalc_ns = cg.esphome_ns.namespace("picocalc")
-AdafruitGfx = picocalc_ns.class_(
-    "AdafruitGfx", cg.Component
-)
+# Create the namespace for box2d-lite
+picocalc_ns = cg.esphome_ns.namespace('picocalc')
+CtxGraphics = picocalc_ns.class_('CtxGraphics', cg.Component)
 
+# Define the configuration schema
 CONFIG_SCHEMA = (
-    cv.Schema({cv.GenerateID(): cv.declare_id(AdafruitGfx)})
+    cv.Schema({cv.GenerateID(): cv.declare_id(CtxGraphics)})
     .extend(cv.COMPONENT_SCHEMA)
 )
 
