@@ -1,0 +1,67 @@
+all: \
+ctx-font-ascii.h \
+ctx-font-mono.h \
+Arimo-Bold.h \
+Arimo-BoldItalic.h \
+Arimo-Italic.h \
+Arimo-Regular.h \
+Cousine-Bold.h \
+Cousine-BoldItalic.h \
+Cousine-Italic.h \
+Cousine-Regular.h \
+Tinos-Bold.h \
+Tinos-BoldItalic.h \
+Tinos-Italic.h \
+Tinos-Regular.h \
+Caladea-Bold.h \
+Caladea-BoldItalic.h \
+Caladea-Italic.h \
+Caladea-Regular.h \
+Carlito-Bold.h \
+Carlito-BoldItalic.h \
+Carlito-Italic.h \
+Carlito-Regular.h \
+Roboto-Regular.h \
+Roboto-Bold.h \
+Roboto-Thin.h \
+Roboto-Italic.h \
+Roboto-BoldItalic.h 
+
+GLYPH_COVERAGE=latin1-cyrillic-greek-Łπ“”•…€™←↑→↓−≈▼♠♣♥♦ﬁﬂﬃﬄ
+
+CTX_FONTGEN=../tools/ctx-fontgen
+
+TTF_TO_ID=sed -e s/-/_/g -e s/\.ttf// -e 's:.*/::'
+
+clean:
+	rm -f *.h  *.ctxf
+
+ctxf:
+	for a in *.h;do make `echo $$a|sed 's/\.h/.ctxf/'`;done
+
+ctx-font-ascii.ctxf: Makefile
+	$(CTX_FONTGEN) ttf/Roboto-Regular.ttf -n ascii -c ascii binary -o $@
+ctx-font-ascii.h: Makefile
+	$(CTX_FONTGEN) ttf/Roboto-Regular.ttf -n ascii -c ascii -o $@
+ctx-font-mono.ctxf: Makefile
+	$(CTX_FONTGEN) ttf/Cousine-Regular.ttf -n mono -c ascii binary -o $@
+ctx-font-mono.h: Makefile
+	$(CTX_FONTGEN) ttf/Cousine-Regular.ttf -n mono -c ascii -o $@
+
+%.ctxf: /usr/share/fonts/truetype/croscore/%.ttf Makefile
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) binary -o $@
+%.ctxf: /usr/share/fonts/truetype/crosextra/%.ttf Makefile
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) binary -o $@
+%.ctxf: ttf/%.ttf Makefile
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) binary -o $@
+
+%.h: ttf/%.ttf  Makefile $(CTX_FONTGEN)
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) -o $@
+%.h: /usr/share/fonts/truetype/croscore/%.ttf  Makefile $(CTX_FONTGEN)
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) -o $@
+%.h: /usr/share/fonts/truetype/crosextra/%.ttf  Makefile $(CTX_FONTGEN)
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) -o $@
+
+%.h: /usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/%.ttf  Makefile $(CTX_FONTGEN)
+	$(CTX_FONTGEN) $< -n `echo $<|$(TTF_TO_ID)` -c $(GLYPH_COVERAGE) -o $@
+

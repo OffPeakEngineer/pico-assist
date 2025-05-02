@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <stdlib.h>
+#include <pico/stdlib.h>
 
 #include <math.h>
 #include <stdio.h>
