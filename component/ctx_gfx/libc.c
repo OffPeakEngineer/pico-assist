@@ -1,0 +1,102 @@
+#include "ctx-split.h"
+
+#ifndef __CTX_LIBC_H
+#define __CTX_LIBC_H
+
+#if !__COSMOPOLITAN__
+#include <stddef.h>
+#endif
+
+static inline void ctx_strcpy (char *dst, const char *src)
+{
+  int i = 0;
+  for (i = 0; src[i]; i++)
+    { dst[i] = src[i]; }
+  dst[i] = 0;
+}
+
+static inline char *_ctx_strchr (const char *haystack, char needle)
+{
+  const char *p = haystack;
+  while (*p && *p != needle)
+    {
+      p++;
+    }
+  if (*p == needle)
+    { return (char *) p; }
+  return NULL;
+}
+static inline char *ctx_strchr (const char *haystack, char needle)
+{
+  return _ctx_strchr (haystack, needle);
+}
+
+static inline int ctx_strcmp (const char *a, const char *b)
+{
+  int i;
+  for (i = 0; a[i] && b[i]; a++, b++)
+    if (a[0] != b[0])
+      { return 1; }
+  if (a[0] == 0 && b[0] == 0) { return 0; }
+  return 1;
+}
+
+static inline int ctx_strncmp (const char *a, const char *b, size_t n)
+{
+  size_t i;
+  for (i = 0; a[i] && b[i] && i < n; a++, b++)
+    if (a[0] != b[0])
+      { return 1; }
+  if (i >=n) return 1;
+  return 0;
+}
+
+static inline int ctx_strlen (const char *s)
+{
+  int len = 0;
+  for (; *s; s++) { len++; }
+  return len;
+}
+
+static inline char *ctx_strstr (const char *h, const char *n)
+{
+  int needle_len = ctx_strlen (n);
+  if (n[0]==0)
+    { return (char *) h; }
+  while (*h)
+    {
+      if (!ctx_strncmp (h, n, needle_len) )
+        { return (char *) h; }
+      h++;
+    }
+  return NULL;
+}
+
+static inline char *ctx_strdup (const char *str)
+{
+  int len = ctx_strlen (str);
+  char *ret = (char*)ctx_malloc (len + 1);
+  memcpy (ret, str, len);
+  ret[len]=0;
+  return ret;
+}
+
+static inline int ctx_atoi (const char *str)
+{
+  int ret = 0;
+  int sign = 1;
+  int pos = 0;
+  if (str[0]=='-'){
+    sign = -1;
+    pos ++;
+  }
+  while(str[pos] >= '0' && str[pos] <= '9')
+  {
+    int digit = str[pos] - '0';
+    ret = ret * 10 + digit;
+    pos++;
+  }
+  return ret * sign;
+}
+
+#endif

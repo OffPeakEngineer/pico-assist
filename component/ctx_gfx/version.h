@@ -1,0 +1,6 @@
+#ifndef CTX_VERSION_STRING
+#define CTX_VERSION_STRING "0.1.5"
+#define CTX_VERSION_MAJOR 0
+#define CTX_VERSION_MINOR 1
+#define CTX_VERSION_MICRO 5
+#endif
