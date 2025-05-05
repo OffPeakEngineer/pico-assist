@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ctx.h"
 
 /* this program is a mini-wrapper for ctx applications using the ctx protocol

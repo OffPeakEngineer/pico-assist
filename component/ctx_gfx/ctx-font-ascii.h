@@ -1,5 +1,4 @@
 #ifndef CTX_FONT_ascii
-#define CTX_FONT_ascii
 /* glyph index: 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghi
   jklmnopqrstuvwxyz{|}~  */

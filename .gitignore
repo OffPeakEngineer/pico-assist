@@ -36,3 +36,4 @@ __pycache__
 /temp
 /.esphome/
 /secrets.yaml
+*.log

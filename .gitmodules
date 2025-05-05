@@ -1,3 +1,12 @@
 [submodule "esphome"]
 	path = esphome
 	url = git@github.com:esphome/esphome.git
+[submodule "external/ctx.graphics"]
+	path = external/ctx.graphics
+	url = git@gitlab.com:shiplift-llc/labs/ctx.graphics.git
+[submodule "external/esphome-external-component-examples"]
+	path = external/esphome-external-component-examples
+	url = https://github.com/jesserockz/esphome-external-component-examples.git
+[submodule "external/box2d-lite"]
+	path = external/box2d-lite
+	url = https://github.com/erincatto/box2d-lite.git
